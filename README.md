@@ -1,4 +1,45 @@
 # mio-fantasma
+
+Alexa skill that allows identifying which Echo device responded and who spoke (via `person_id`), sending the data to Home Assistant.
+
+# 👻 Alexa Skill: "Mio Fantasma"
+
+## What is "Mio Fantasma"?
+
+**Mio Fantasma** (My Ghost) is a custom Alexa-hosted skill that acts as an intelligent bridge between Amazon Alexa and **Home Assistant**.
+
+Unlike standard integrations, this skill acts as a real-time "context sensor". When activated, it transmits three specific and unique pieces of data to Home Assistant:
+
+* **Who spoke:** Identifies the user via their `person_id` (Voice ID).
+* **Where they are:** Captures the ID of the specific Echo device that received the command.
+* **What they want to do:** Sends a specific "procedure" (e.g., "heating," "goodnight," etc.).
+
+---
+
+## Why did I create it?
+
+The primary need arose to maximize the effectiveness of automations based on **[alexa-actions](https://github.com/keatontaylor/alexa-actions)**.
+
+The main limitation of many integrations lies in the difficulty of starting an interactive dialogue on the correct device and with the correct person. "Mio Fantasma" solves this problem by ensuring:
+
+1. **Device Certainty (Where):** The skill captures the ID of the Echo that responded to the routine. This allows `alexa-actions` to immediately "hook" the dialogue flow onto that specific device, preventing the question from being asked in the wrong room.
+2. **Identity Certainty (Who):** Thanks to `person_id` recognition, Home Assistant knows who is initiating the action. This allows for personalizing the dialogue flow or restricting critical actions to authorized users only.
+3. **Fluid Dialogue Flow:** The skill allows for the immediate start of the `alexa-actions` question-and-answer sequence, making the interaction natural and free of routing errors.
+
+---
+
+## Technical Notes and Optimization
+
+* **Instant Trigger:** The skill does not execute actions directly; instead, it populates an `input_text` entity in Home Assistant. This state change is detected instantly (e.g., via PyScript), serving as a trigger for the subsequent logic.
+* **Latency Management (User Experience):** By nature, triggering an automation via the cloud (Alexa -> Skill -> HA -> Alexa-Actions) can involve minor processing delays.
+* **Response Message Trick:** You can visually and acoustically "mask" these latency times by slightly increasing the length of the skill's response message, which is configurable in the `config.json` file.
+* This ensures that the `device_id` sent to Home Assistant is the correct one for the room you are currently in.
+
+---
+
+---
+
+# mio-fantasma
 Skill Alexa che permette di identificare quale dispositivo Echo ha risposto e chi ha parlato (tramite `person_id`), inviando i dati a Home Assistant
 
 # 👻 Skill Alexa: "Mio Fantasma"
