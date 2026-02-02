@@ -14,7 +14,6 @@ Unlike standard integrations, this skill acts as a real-time "context sensor". W
 * **Where they are:** Captures the ID of the specific Echo device that received the command.
 * **What they want to do:** Sends a specific "procedure" (e.g., "heating," "goodnight," etc.).
 
----
 
 ## Why did I create it?
 
@@ -36,6 +35,25 @@ The main limitation of many integrations lies in the difficulty of starting an i
 * This ensures that the `device_id` sent to Home Assistant is the correct one for the room you are currently in.
 
 ---
+
+<details>
+  <summary>Click to view the Workflow Diagram</summary>
+
+``` mermaid
+graph TD
+    A[🗣️ User Speaks] --> B{📡 Echo Device}
+    B -->|Captures person_id & device_id| C[👻 Skill: Mio Fantasma]
+    C -->|Sends data via API| D[🏠 Home Assistant]
+    D -->|Updates| E(input_text.alexa_last_called_device)
+    E -->|Instant Trigger| F[⚡ Dispatcher: PyScript/Automation]
+    F -->|Executes| G[🎬 Procedure: e.g., Heating]
+    G -->|Targeted Dialogue| B
+```
+
+</details>
+
+---
+
 ![alexa_last_called_device](images/input_text.alexa_last_called_device.png)
 ---
 
