@@ -36,7 +36,7 @@ The main limitation of many integrations lies in the difficulty of starting an i
 * This ensures that the `device_id` sent to Home Assistant is the correct one for the room you are currently in.
 
 ---
-
+![alexa_last_called_device](images/input_text.alexa_last_called_device.png)
 ---
 
 # mio-fantasma
